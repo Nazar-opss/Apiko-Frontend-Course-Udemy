@@ -69,7 +69,7 @@
 //     }
 //     console.log(wordCount); // some guy from internet version
 // }
-// calculateWordsInString("Easy string for count");
+// calculateWordsInString("Easy string  for count");
 // calculateWordsInString("Easy");
 // calculateWordsInString("Some string with a triple   space");
 // calculateWordsInString("Some?  string, with a triple   space");
