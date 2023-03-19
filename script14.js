@@ -1,13 +1,20 @@
-// function unicFn(initialArray) {
-//     let arry = initialArray;
+//function unicFn(initialArray) {
+    //let arry = initialArray;
 
-//     function onlyUnique(value, index, array) {
-//         return array.indexOf(value) === index;
-//     }
-//     let unique = arry.filter(onlyUnique);
-//     console.log(unique);
-// }
-// unicFn([2, 3, 1, 3, 3, 7]);
+    // function onlyUnique(value, index, array) {
+    //     return array.indexOf(value) === index;
+    // }
+    // let unique = arry.filter(onlyUnique);
+    // console.log(unique);
+    //const unic = [];
+    //initialArray.forEach((i) => {
+    //    if (!unic.includes(i)) {
+    //        unic.push(i);
+    //    }
+    //});
+    //console.log(`[${unic}]`);
+//}
+//unicFn([2, 3, 1, 3, 3, 7]);
 ////////////////////////////////////////////////////////////
 // function isEvenArray(initialArray) {
 //     const arry = initialArray;
