@@ -48,12 +48,20 @@
     // cat.greet(); // should produce "meow"
 ////////////////////////////////////////////////////////////
 // Завдання 4
-const dog = {
-    sound: 'bark',
-    greet: function() {
-        setTimeout( () => { // fix code in this line
-            console.log(dog.sound)
-        },0)
-    }
-}    
-    dog.greet();
+    // const dog = {
+    //     sound: 'bark',
+    //     greet: function() {
+    //         setTimeout( () => { // fix code in this line
+    //             console.log(dog.sound)
+    //         },0)
+    //     }
+    // }    
+    // dog.greet();
+////////////////////////////////////////////////////////////
+// Завдання 5
+let convert; // write your anonymous function here
+let numbers = function(number) {
+    return number * Math.pow(10, -6);
+}.call(convert, 1000000000);
+console.log(numbers);
+
