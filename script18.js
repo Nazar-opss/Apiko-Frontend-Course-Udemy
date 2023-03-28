@@ -59,9 +59,27 @@
     // dog.greet();
 ////////////////////////////////////////////////////////////
 // Завдання 5
-let convert; // write your anonymous function here
-let numbers = function(number) {
-    return number * Math.pow(10, -6);
-}.call(convert, 1000000000);
-console.log(numbers);
+    // let convert = function(number) {
+    //     return result = number * Math.pow(10, -6);
+    // };
+    // convert(100000000);
+    // console.log(result.toFixed(2) + " Mb");
+////////////////////////////////////////////////////////////
+// Завдання 6
+const Person = {
+    firstName: 'John',
+    lastName: 'Doe',
+    getFullName: function () {
+        const fullName = this.firstName + ' ' + this.lastName;
+        return fullName;
+    }
+};
+    
+const testArgs = ['sushi', 'hiking']
+    
+let logPersonNameAndInterests = function (...moreArgs) {
+    return this.getFullName() + ' loves: ' + moreArgs;
+};
+
+console.log(logPersonNameAndInterests.apply(Person, [testArgs]));
 
