@@ -66,20 +66,20 @@
     // console.log(result.toFixed(2) + " Mb");
 ////////////////////////////////////////////////////////////
 // Завдання 6
-const Person = {
-    firstName: 'John',
-    lastName: 'Doe',
-    getFullName: function () {
-        const fullName = this.firstName + ' ' + this.lastName;
-        return fullName;
-    }
-};
+// const Person = {
+//     firstName: 'John',
+//     lastName: 'Doe',
+//     getFullName: function () {
+//         const fullName = this.firstName + ' ' + this.lastName;
+//         return fullName;
+//     }
+// };
     
-const testArgs = ['sushi', 'hiking']
+// const testArgs = ['sushi', 'hiking']
     
-let logPersonNameAndInterests = function (...moreArgs) {
-    return this.getFullName() + ' loves: ' + moreArgs;
-};
+// let logPersonNameAndInterests = function (...moreArgs) {
+//     return this.getFullName() + ' loves: ' + moreArgs;
+// };
 
-console.log(logPersonNameAndInterests.apply(Person, [testArgs]));
+// console.log(logPersonNameAndInterests.apply(Person, [testArgs]));
 
