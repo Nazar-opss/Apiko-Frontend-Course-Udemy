@@ -37,22 +37,41 @@
 // Завдання 3
 // Створити ф-ію timer, яка приймає число(секунди) та імітує поведінку таймера: кожну секунду виводить в консоль стрічку Timer: ${s}, де ${s} - кількість секунд що залишилось
 
-function timer(int) {
-    // let date = new Date(0)
-    // let setSeconds = date.setSeconds(int)
-    // int = int-1;
+// function timer(seconds, cb) {
+//     let remainingTime = seconds;
+//     setTimeout(function() {
+//         cb();
+//         console.log(`Timer: ${remainingTime}`);
+//         if(remainingTime > 0) {
+//             timer(remainingTime - 1, cb);
+//         }
+//     }, 1000)
+// }
+// let callback = function(){}    
 
-    // let time = `Timer: ${int}`
-    
-    // console.log(time)
-    console.log(int);
-}    
+// timer(50, callback);
 
-timer(34);
 // Завдання 4
 // Створити клас який містить поле name.
 // Зробити так щоб це поле автоматично через 5с занулювалося(ставало null) після створення об’єкта
 // Також добавити функцію(метод) цього класу яка буде зупиняти(скасовувати) це занулювання
 
-
-
+// class containName {
+//     constructor(name) {
+//         this.name = name;
+//         this.setNull();
+//     }
+//     setNull() {
+//         this.id = setTimeout(() => {
+//             (this.name = null);
+//             console.log(this.name);
+//         }, 5000)
+//     }
+    
+//     destroySetNull() {
+//         clearTimeout(this.id);
+//     }
+// }
+// let nameresult = new containName('kiki');
+// console.log(nameresult.name);
+// name.destroySetNull(); cancel null
