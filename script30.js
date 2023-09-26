@@ -118,24 +118,32 @@ const baseUrl = "https://jsonplaceholder.typicode.com"
 
 function getAlbum(id) {
     return fetch(`${baseUrl}/albums/${id}`)
-            .then(response => response.json())
-            .then(json => console.log(json))
-}
+            .then(response => {if(!response.ok){
+                throw new Error("status code: " + response.status);
+                }
+                return response.json();
+            }).then(json => console.log(json))
+            
+        
+    }
 
 function getSpecifiedAlbums(ids = []) {
  // returns Promise
-    let promise = new Promise(function(resolve, reject){
-        
-    })
+    const arr = [];
+        ids.forEach(element => {
+            arr.push(getAlbum(element));
+        });
+
+        return Promise.all(arr.sort())
 }
-getAlbum(1);
-// getSpecifiedAlbums([1, 15])
-//     .then((results) => {
-//         console.log("Results: ", results);
-//     })
-//     .catch((error) => {
-//         console.log("Error: ", error);
-//     });
+
+getSpecifiedAlbums([1, 15, 3])
+    // .then((results) => {
+    //     console.log("Results: ", results);
+    // })
+    // .catch((error) => {
+    //     console.log("Error: ", error);
+    // });
 
 // Очікуваний результат - масив вказаних альбомів
 
