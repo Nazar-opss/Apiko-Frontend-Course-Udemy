@@ -114,36 +114,30 @@
 // Щоб getSpecifiedAlbums виконувалась швидше, усі запити на отримання певного альбому повинні виконуватись паралельно
 // У разі успішного виконання промісу з getSpecifiedAlbums, вивести у консоль результат.
 
-const baseUrl = "https://jsonplaceholder.typicode.com"
+// const baseUrl = "https://jsonplaceholder.typicode.com"
 
-function getAlbum(id) {
-    return fetch(`${baseUrl}/albums/${id}`)
-            .then(response => {if(!response.ok){
-                throw new Error("status code: " + response.status);
-                }
-                return response.json();
-            }).then(json => console.log(json))
+// function getAlbum(id) {
+//     return fetch(`${baseUrl}/albums/${id}`)
+//             .then(response => {if(!response.ok){
+//                 throw new Error("status code: " + response.status);
+//                 }
+//                 return response.json();
+//             }).then(json => console.log(json))
             
         
-    }
+//     }
 
-function getSpecifiedAlbums(ids = []) {
- // returns Promise
-    const arr = [];
-        ids.forEach(element => {
-            arr.push(getAlbum(element));
-        });
+// function getSpecifiedAlbums(ids = []) {
+//  // returns Promise
+//     const arr = [];
+//         ids.forEach(element => {
+//             arr.push(getAlbum(element));
+//         });
 
-        return Promise.all(arr.sort())
-}
+//         return Promise.all(arr.sort())
+// }
 
-getSpecifiedAlbums([1, 15, 3])
-    // .then((results) => {
-    //     console.log("Results: ", results);
-    // })
-    // .catch((error) => {
-    //     console.log("Error: ", error);
-    // });
+// getSpecifiedAlbums([1, 15, 3])
 
 // Очікуваний результат - масив вказаних альбомів
 
