@@ -112,59 +112,51 @@
 
 // Підготовлений код
 
-async function fetchSWAPI(resource, throwError) {
-    const rootUrl = "https://swapi.py4e.com/api/";
-    // try { 
-    //     // const response = await fetch();
-    //     const response = async () =>{
-    //         if (resource.length > 10) {
-    //             console.log("10>")
-    //             let fullfetch = await fetch(resource)
-    //         } else {
-    //             let halffetch = await fetch(`${rootUrl}${resource}`)
-    //         }
-    //     }
-    //     if (!response.ok) {
-    //         throw new Error(`Failed with status code: ${response.status}`);
-    //     }
-    //     let people = await response.json();
-    //     console.log("Result :", people);
-    // } catch (error) {
-    //     console.log("Request Error: ", error);
-    // }
-    // write your code here
+// async function fetchSWAPI(resource, throwError = false) {
+//     const rootUrl = "https://swapi.py4e.com/api/";
+//     let link = '';
 
-    try {
-        console.log(resource.length)
-        const response = await fetch(`${rootUrl}${resource}`)
-        let people = await response.json();
-        console.log("Result :", people);
-    } catch (error) {
-        
-    }
-    
-}
-fetchSWAPI('people/1/');
+//     if (resource.includes(rootUrl)) {
+//         link = resource;
+//     } else{
+//         link = rootUrl + resource;
+//     } 
 
-async function testFetchSWAPI() {
-    try {
-        const person = await fetchSWAPI("people/1/");
-        console.log("person ", person);
+//     try {
+//         let response = await fetch(link);
+//         if (response.ok) {
+//             return response.json();
+//         } else {
+//             throw new Error(`Failed with status code: ${response.status}`);
+//         }
+//     } catch (error) {
+//         if (throwError) {
+//             throw error;
+//         } else {
+//             console.log('fetchSWAPI error', error);
+//         }
+//     }
+// }
 
-        const film = await fetchSWAPI("https://swapi.py4e.com/api/films/1/");
-        console.log("film ", film);
+// async function testFetchSWAPI() {
+//     try {
+//         const person = await fetchSWAPI("people/1/");
+//         console.log("person ", person);
 
-        const film1001Id = await fetchSWAPI("films/1001/");
-        console.log("film1001Id ", film1001Id);
+//         const film = await fetchSWAPI("https://swapi.py4e.com/api/films/1/");
+//         console.log("film ", film);
 
-        // should throw error
-        await fetchSWAPI("films/1101/", true);
-    } catch (error) {
-        console.log("testFetchSWAPI error ", error);
-    }
-}
+//         const film1001Id = await fetchSWAPI("films/1001/");
+//         console.log("film1001Id ", film1001Id);
 
-testFetchSWAPI();
+//         // should throw error
+//         await fetchSWAPI("films/1101/", true);
+//     } catch (error) {
+//         console.log("testFetchSWAPI error ", error);
+//     }
+// }
+
+// testFetchSWAPI();
 
 // Завдання 5
 // Написати функцію яка буде використовувати попередньо написану функцію fetchSWAPI, ця функція повинна робити запити щоб отримати дані людини з вказаним ім'ям, після цього на основі отриманої відповіді паралельно отримати деталі фільмів у яких людина з'явилась.
@@ -177,17 +169,44 @@ testFetchSWAPI();
 // kenobiFilms  { name: "Obi-Wan Kenobi", films: [{ title: "A New Hope", episode_id: 4, ... }] }
 
 // Підготовлений код:
+async function fetchSWAPI(resource, throwError = false) {
+    const rootUrl = "https://swapi.py4e.com/api/people/?search=";
+    let link = '';
 
-// async function getPersonFilms(name) {
-//  write your code here, use fetchSWAPI()
-// }
+    if (resource.includes(rootUrl)) {
+        link = resource;
+    } else{
+        link = rootUrl + resource;
+    } 
 
-// async function testGetPersonFilms() {
-//  const lukeFilms = await getPersonFilms("Luke");
-//  console.log("lukeFilms ", lukeFilms);
+    try {
+        let response = await fetch(link);
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error(`Failed with status code: ${response.status}`);
+        }
+    } catch (error) {
+        if (throwError) {
+            throw error;
+        } else {
+            console.log('fetchSWAPI error', error);
+        }
+    }
+}
 
-//  const kenobiFilms = await getPersonFilms("Kenobi");
-//  console.log("kenobiFilms ", kenobiFilms);
-// }
+async function getPersonFilms(name) {
+    // write your code here, use fetchSWAPI()
+    let name = await fetchSWAPI(name);
 
-// testGetPersonFilms();
+}
+
+async function testGetPersonFilms() {
+    const lukeFilms = await getPersonFilms("Luke");
+    console.log("lukeFilms ", lukeFilms);
+
+    const kenobiFilms = await getPersonFilms("Kenobi");
+    console.log("kenobiFilms ", kenobiFilms);
+}
+
+testGetPersonFilms();
