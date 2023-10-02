@@ -170,22 +170,24 @@
 
 // Підготовлений код:
 async function fetchSWAPI(resource, throwError = false) {
-    const rootUrl = "https://swapi.py4e.com/api/people/?search=";
+    const rootUrl = "https://swapi.py4e.com/api/";
     let link = '';
 
-    if (resource.includes(rootUrl)) {
+    if (resource.startsWith('https')) {
         link = resource;
-    } else{
+        console.log(link) //
+    } else {
         link = rootUrl + resource;
-    } 
+        console.log(link) // 
+    }
 
     try {
         let response = await fetch(link);
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error(`Failed with status code: ${response.status}`);
+        if (!response.ok) {
+            throwError;
         }
+        let data = response.json();
+        return data;
     } catch (error) {
         if (throwError) {
             throw error;
@@ -197,7 +199,38 @@ async function fetchSWAPI(resource, throwError = false) {
 
 async function getPersonFilms(name) {
     // write your code here, use fetchSWAPI()
-    let name = await fetchSWAPI(name);
+    try {
+
+        const urlPerson = `people/?search=${name}`;
+        console.log(urlPerson) // 
+        const person = fetchSWAPI(urlPerson);
+
+        namePerson = person['results']['0']['name'];
+
+        arrFilmsUrl = person['results']['0']['films'];
+        
+        console.log(arrFilmsUrl);
+
+        let resArrFilms = [];
+
+        arrFilmsUrl.forEach(async item => {
+
+            let data = await fetchSWAPI(item);
+
+            resArrFilms.push(data);
+        });
+
+        aboutPerson = {
+            name: namePerson,
+            films: resArrFilms,
+        }
+
+        return aboutPerson
+
+    } catch (error) {
+        console.log("Request Error: ", error);
+        return []
+    }
 
 }
 
