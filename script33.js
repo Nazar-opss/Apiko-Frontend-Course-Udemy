@@ -169,77 +169,55 @@
 // kenobiFilms  { name: "Obi-Wan Kenobi", films: [{ title: "A New Hope", episode_id: 4, ... }] }
 
 // Підготовлений код:
-async function fetchSWAPI(resource, throwError = false) {
-    const rootUrl = "https://swapi.py4e.com/api/";
-    let link = '';
+// async function fetchSWAPI(resource, throwError = false) {
+//     const rootUrl = "https://swapi.py4e.com/api/";
+//     let link = '';
 
-    if (resource.startsWith('https')) {
-        link = resource;
-        console.log(link) //
-    } else {
-        link = rootUrl + resource;
-        console.log(link) // 
-    }
+//     if (resource.startsWith('https')) {
+//         link = resource;
+//     } else {
+//         link = rootUrl + resource;
+//     }
 
-    try {
-        let response = await fetch(link);
-        if (!response.ok) {
-            throwError;
-        }
-        let data = response.json();
-        return data;
-    } catch (error) {
-        if (throwError) {
-            throw error;
-        } else {
-            console.log('fetchSWAPI error', error);
-        }
-    }
-}
+//     try {
 
-async function getPersonFilms(name) {
-    // write your code here, use fetchSWAPI()
-    try {
-
-        const urlPerson = `people/?search=${name}`;
-        console.log(urlPerson) // 
-        const person = fetchSWAPI(urlPerson);
-
-        namePerson = person['results']['0']['name'];
-
-        arrFilmsUrl = person['results']['0']['films'];
+//         let response = await fetch(link);
         
-        console.log(arrFilmsUrl);
+//         if (!response.ok) {
+//             throwError;
+//         }
+//         return response.json();
+//     } catch (error) {
+//         if (throwError) {
+//             throw error;
+//         } else {
+//             console.log('fetchSWAPI error', error);
+//         }
+//     }
+// }
 
-        let resArrFilms = [];
+// async function getPersonFilms(name) {
+//     // write your code here, use fetchSWAPI()
+//     try {
+//         const urlPerson = `people/?search=${name}`;
+//         const person = await fetchSWAPI(urlPerson);
+//         const films = person.results[0].films;
+//         const personFilms = await Promise.all(films.map(url => fetchSWAPI(url)));
+//         return personFilms;
 
-        arrFilmsUrl.forEach(async item => {
 
-            let data = await fetchSWAPI(item);
+//     } catch (error) {
+//         console.log("Request Error: ", error);
+//     }
 
-            resArrFilms.push(data);
-        });
+// }
 
-        aboutPerson = {
-            name: namePerson,
-            films: resArrFilms,
-        }
+// async function testGetPersonFilms() {
+//     const lukeFilms = await getPersonFilms("Luke");
+//     console.log("lukeFilms ", lukeFilms);
 
-        return aboutPerson
+//     const kenobiFilms = await getPersonFilms("Kenobi");
+//     console.log("kenobiFilms ", kenobiFilms);
+// }
 
-    } catch (error) {
-        console.log("Request Error: ", error);
-        return []
-    }
-
-}
-
-async function testGetPersonFilms() {
-    const lukeFilms = await getPersonFilms("Luke");
-    console.log("lukeFilms ", lukeFilms);
-
-    const kenobiFilms = await getPersonFilms("Kenobi");
-    console.log("kenobiFilms ", kenobiFilms);
-}
-
-testGetPersonFilms();
+// testGetPersonFilms();
