@@ -52,12 +52,16 @@ const testUserList = [
 
 const resultUserList = [];
 
-for (const User of testUserList) {
-  let str = User;
+for (const { name, businessSite, email, phoneNumber } of testUserList) {
   // let result = String(str.email).match(emailReg);
   // console.log(result)
-  console.log(emailReg.test(str.email));
-
+  console.log("email :" + emailReg.test(email));
+  console.log("phone :" + phoneReg.test(phoneNumber));
+  console.log("site :" + urlReg.test(businessSite));
+    if (emailReg.test(email) && phoneReg.test(phoneNumber) && urlReg.test(businessSite) ) {
+      let newUser = new User(name, {email, phoneNumber, businessSite});
+      resultUserList.push(newUser);
+  }
 }
 
 console.log(resultUserList);
