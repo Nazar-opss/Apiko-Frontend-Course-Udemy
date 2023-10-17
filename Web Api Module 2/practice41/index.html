@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="styles/style.css" rel="stylesheet" type="text/css" />
-    <title>Movies</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <title>TheMovieDB PoC</title>
 </head>
 <body>
-    
-    <script src="./script.js"></script>
+    <header>
+        TheMovieDB PoC
+    </header>
+    <main>
+        <div class="loading">Loading popular movies...</div>
+        <div id="listOfMovies"></div>
+    </main>
+    <script type="module" src="./index.js"></script>
 </body>
 </html>
