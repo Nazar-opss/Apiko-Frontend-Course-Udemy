@@ -10,8 +10,8 @@ class API {
           
           let search = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText}&include_adult=false&language=en-US&page=1`, options)
           const data = await search.json();
-          console.log(data.results);
-          return data.results;  
+          console.log(data.results); 
+          return data;  
     }
 }
 export default API;
