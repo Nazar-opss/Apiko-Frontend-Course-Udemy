@@ -1,10 +1,28 @@
 body {
     margin: 0;
 }
-
+.filmList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.movie {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
 .searchBar{
     width: 50% !important;
     margin: auto;
     display: flex;
     flex: none !important;
+}
+img {
+    width: 300px;
+    height: 450px;
+}
+h4 {
+    overflow-wrap: normal;
+    max-width: 300px;
+    text-align: center;
 }

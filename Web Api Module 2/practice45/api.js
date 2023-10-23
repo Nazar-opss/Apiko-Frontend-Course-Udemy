@@ -1,5 +1,5 @@
 class API {
-    async fetchMoviesBySearchText(){
+    async fetchMoviesBySearchText(searchText){
         const options = {
             method: 'GET',
             headers: {
@@ -8,11 +8,10 @@ class API {
             }
           };
           
-          fetch('https://api.themoviedb.org/3/search/movie?query=James&include_adult=false&language=en-US&page=1', options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
+          let search = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText}&include_adult=false&language=en-US&page=1`, options)
+          const data = await search.json();
+          console.log(data.results);
+          return data.results;  
     }
-    
 }
 export default API;
