@@ -27,3 +27,11 @@ h4 {
     max-width: 300px;
     text-align: center;
 }
+footer{
+    display: flex;
+}
+.loadMore_button{
+    width: 50%;
+    margin: auto;
+    margin-bottom: 15px;
+}
