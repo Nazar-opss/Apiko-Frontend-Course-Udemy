@@ -12,29 +12,12 @@ body{
     flex-direction: column;
     padding: 15px;
 }
-header{
-    margin:auto;
-    text-align: center;
-}
 img {
     width: 300px;
     height: 450px;
-    border-radius: 5%
 }
 h4 {
     overflow-wrap: normal;
     max-width: 300px;
     text-align: center;
-}
-.like-button{
-    color:#75818f;
-    position: absolute;
-    background-color: #fad2aa;
-    padding: 5px 10px;
-    margin-top: 20px;
-    margin-left: 15px;
-    border-radius: 25%
-}
-.like-button-active{
-    color:red;
 }
