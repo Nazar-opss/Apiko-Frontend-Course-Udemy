@@ -35,6 +35,9 @@ h4 {
     margin-left: 15px;
     border-radius: 25%
 }
+.hover:hover{
+    color:#44474b;
+}
 .like-button-active{
     color:red;
 }
