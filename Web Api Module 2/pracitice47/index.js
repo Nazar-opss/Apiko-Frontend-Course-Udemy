@@ -2,10 +2,14 @@ import API from "./api.js";
 
 let listOfMovies = document.getElementById('listOfMovies')
 let loading = document.querySelector('.loading')
+let popularMovies = document.querySelector('.popularMovies')
+let bookmarks = document.querySelector('.bookmarks')
+
 
 loading.remove();
 
 const filmList = await API.fetchPopularMovies();
+
 let storageSet = (id) => {
     id = id.split(" ")[2];
     let activeButton = document.querySelectorAll('.like-button-active')
@@ -31,13 +35,68 @@ let readLocalStorage = () => {
     if (arr === null) {
         arr = [];
     }
-    console.log(typeof(arr))
+    // console.log(typeof(arr))
     return arr;
 } 
 let arrId = readLocalStorage();
 
 let renderPopularMovies = (filmList, arrId) => {
     filmList.forEach(movieItem => {
+        const imagePath = "https://image.tmdb.org/t/p/w300";
+        let {id, poster_path, original_title, isLiked = false } = movieItem
+        arrId.forEach(elem => {
+            if (elem.includes(movieItem.id)){
+                isLiked = true;
+                // localStorage.setItem('Movie', JSON.stringify(movieItem))
+            }
+        })
+        const moviesElement = document.createElement('li');
+        moviesElement.classList.add('movie');
+        moviesElement.innerHTML = `<img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4>
+        <a href="#" class="like-button hover ${id} ${isLiked ? "like-button-active" : ""}">
+        <i class="fa-solid fa-heart ${id} fa-xl"></i>
+        </a>`;
+        
+        console.log(isLiked)
+        
+        listOfMovies.appendChild(moviesElement)
+    });
+
+    let likeButtons = document.querySelectorAll('a.like-button')
+    
+    likeButtons.forEach((button) =>{
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            button.classList.toggle('like-button-active')
+            storageSet(e.target.className);
+            console.log(e.target)
+            // localStorage.setItem('Movie', JSON.stringify(movieItem))
+        })
+    })
+}
+
+// renderPopularMovies(filmList, arrId);
+
+popularMovies.addEventListener('click', (e) => {
+    listOfMovies.innerHTML = '';
+
+    renderPopularMovies(filmList, arrId);
+})
+
+let arr = localStorage.getItem('Movie')
+arr = JSON.parse(arr)
+let bookmarkArray = [];
+bookmarkArray.push(arr);
+console.log(bookmarkArray)
+
+bookmarks.addEventListener('click', (e) => {
+    listOfMovies.innerHTML = '';
+
+    renderBookmarkMovies(bookmarkArray)
+}) 
+// додавання букмарки в локал сторедж доробити
+let renderBookmarkMovies = (bookmarkArray) =>{
+    bookmarkArray.forEach(movieItem => {
         const imagePath = "https://image.tmdb.org/t/p/w300";
         let {id, poster_path, original_title, isLiked = false } = movieItem
         arrId.forEach(elem => {
@@ -51,19 +110,8 @@ let renderPopularMovies = (filmList, arrId) => {
         <a href="#" class="like-button hover ${id} ${isLiked ? "like-button-active" : ""}">
             <i class="fa-solid fa-heart ${id} fa-xl"></i>
         </a>`;
-        console.log(isLiked)
-        
+
         listOfMovies.appendChild(moviesElement)
-    });
-    let likeButtons = document.querySelectorAll('a.like-button')
-    
-    likeButtons.forEach((button) =>{
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            button.classList.toggle('like-button-active')
-            storageSet(e.target.className);
-        })
     })
 }
-
-renderPopularMovies(filmList, arrId);
+// renderBookmarkMovies(bookmarkArray)
