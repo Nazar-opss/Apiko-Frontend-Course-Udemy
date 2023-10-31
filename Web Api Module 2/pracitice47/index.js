@@ -4,14 +4,11 @@ let listOfMovies = document.getElementById('listOfMovies')
 let loading = document.querySelector('.loading')
 
 loading.remove();
+
 const filmList = await API.fetchPopularMovies();
 let storageSet = (id) => {
-    
-
     id = id.split(" ")[2];
-    // console.log(id)
     let activeButton = document.querySelectorAll('.like-button-active')
-    console.log(activeButton)
     if(activeButton) {
         let arr = readLocalStorage()
         console.log(arr)
@@ -38,26 +35,16 @@ let readLocalStorage = () => {
     return arr;
 } 
 let arrId = readLocalStorage();
-console.log(typeof(arrId))
 
-// let arrIDArray = [];
-// for (let likes in arrId) {
-//     if (arrId.hasOwnProperty(likes)) {
-//         arrIDArray.push(likes)
-//     }
-// }
-// console.log(arrIDArray)
-// working here, isLiked problem and object instead of array
 let renderPopularMovies = (filmList, arrId) => {
     filmList.forEach(movieItem => {
         const imagePath = "https://image.tmdb.org/t/p/w300";
-        const {id, poster_path, original_title, isLiked = false } = movieItem
-        // let exist = arrId.includes(movieItem.id)
-        // console.log(exist)
-        if(arrId){
-            console.log('true')
-        //     isLiked = true;
-        }
+        let {id, poster_path, original_title, isLiked = false } = movieItem
+        arrId.forEach(elem => {
+            if (elem.includes(movieItem.id)){
+                isLiked = true;
+            }
+        })
         const moviesElement = document.createElement('li');
         moviesElement.classList.add('movie');
         moviesElement.innerHTML = `<img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4>
