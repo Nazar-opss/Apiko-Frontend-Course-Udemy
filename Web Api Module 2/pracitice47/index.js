@@ -10,6 +10,7 @@ loading.remove();
 
 const filmList = await API.fetchPopularMovies();
 
+localStorage.setItem('MoVieF', JSON.stringify(filmList))
 let storageSet = (id) => {
     id = id.split(" ")[2];
     let activeButton = document.querySelectorAll('.like-button-active')
@@ -47,6 +48,7 @@ let renderPopularMovies = (filmList, arrId) => {
         arrId.forEach(elem => {
             if (elem.includes(movieItem.id)){
                 isLiked = true;
+                
                 // localStorage.setItem('Movie', JSON.stringify(movieItem))
             }
         })
@@ -58,19 +60,23 @@ let renderPopularMovies = (filmList, arrId) => {
         </a>`;
         
         console.log(isLiked)
-        
-        listOfMovies.appendChild(moviesElement)
+        console.log(moviesElement)
+        console.log(movieItem)
+        // let arr = []
+        // arr.push(movieItem);
+        // localStorage.setItem('Movie', JSON.stringify(arr))
+
+        listOfMovies.appendChild(moviesElement)        
     });
 
-    let likeButtons = document.querySelectorAll('a.like-button')
-    
+    let  likeButtons  = document.querySelectorAll('a.like-button')
     likeButtons.forEach((button) =>{
         button.addEventListener('click', (e) => {
             e.preventDefault();
             button.classList.toggle('like-button-active')
             storageSet(e.target.className);
+            
             console.log(e.target)
-            // localStorage.setItem('Movie', JSON.stringify(movieItem))
         })
     })
 }
@@ -83,17 +89,14 @@ popularMovies.addEventListener('click', (e) => {
     renderPopularMovies(filmList, arrId);
 })
 
-let arr = localStorage.getItem('Movie')
+// let arr = localStorage.getItem('Movie')
+let arr = localStorage.getItem('MoVieF')
 arr = JSON.parse(arr)
-let bookmarkArray = [];
-bookmarkArray.push(arr);
-console.log(bookmarkArray)
+console.log(arr)
+// let bookmarkArray = [];
+// bookmarkArray.push(arr);
+// console.log(bookmarkArray)
 
-bookmarks.addEventListener('click', (e) => {
-    listOfMovies.innerHTML = '';
-
-    renderBookmarkMovies(bookmarkArray)
-}) 
 // додавання букмарки в локал сторедж доробити
 let renderBookmarkMovies = (bookmarkArray) =>{
     bookmarkArray.forEach(movieItem => {
@@ -114,4 +117,11 @@ let renderBookmarkMovies = (bookmarkArray) =>{
         listOfMovies.appendChild(moviesElement)
     })
 }
+
 // renderBookmarkMovies(bookmarkArray)
+
+bookmarks.addEventListener('click', (e) => {
+    listOfMovies.innerHTML = '';
+
+    renderBookmarkMovies(arr)
+}) 
