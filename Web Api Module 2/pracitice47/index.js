@@ -5,11 +5,9 @@ let loading = document.querySelector('.loading')
 let popularMovies = document.querySelector('.popularMovies')
 let bookmarks = document.querySelector('.bookmarks')
 
-
 loading.remove();
 
 const filmList = await API.fetchPopularMovies();
-
 
 let storageSet = (id) => {
     id = id.split(" ")[2];
@@ -49,8 +47,6 @@ let renderPopularMovies = (filmList, arrId) => {
         arrId.forEach(elem => {
             if (elem.includes(movieItem.id)){
                 isLiked = true;
-                
-                // localStorage.setItem('Movie', JSON.stringify(movieItem))
             }
         })
         const moviesElement = document.createElement('li');
@@ -60,31 +56,8 @@ let renderPopularMovies = (filmList, arrId) => {
         <i class="fa-solid fa-heart ${id} fa-xl"></i>
         </a>`;
 
-        // console.log(isLiked)
-        // console.log(moviesElement)
-        // console.log(movieItem)
-        // let arr = []
-        // arr.push(movieItem);
-
-        // if(isLiked == true) {
-        //     let arr = []
-        //     arr.push(movieItem)
-        //     localStorage.setItem('Movie', JSON.stringify(arr))
-        //     console.log('like')
-        // } // робоча схема тільки перенести на кнопку і пофіксити саму кнопку
-        
-
         listOfMovies.appendChild(moviesElement)  
-        localStorage.setItem('Movie0', JSON.stringify(filmList))
-        // let  likeButtons  = document.querySelectorAll('a.like-button')
-        // console.log(likeButtons)
-        // likeButtons.forEach((button) =>{
-        //     button.addEventListener('click', (e) => {
-        //         e.preventDefault();
-        //         button.classList.toggle('like-button-active')
-        //         storageSet(e.target.className);
-        //     })
-        // })
+        localStorage.setItem('Movie', JSON.stringify(filmList))
     });
 
     let  likeButtons  = document.querySelectorAll('a.like-button')
@@ -93,28 +66,8 @@ let renderPopularMovies = (filmList, arrId) => {
             e.preventDefault();
             button.classList.toggle('like-button-active')
             storageSet(e.target.className);
-            let movie0 = localStorage.getItem('Movie0')
-            movie0 = JSON.parse(movie0)
-            // console.log(movie0)
-            movie0.forEach(elemM => {
-                let {id, poster_path, original_title, isLiked} = elemM
-                arrId.forEach(elem => {
-                    if (elem.includes(elemM.id)){
-                        isLiked = true;
-                    }
-                })
-                console.log(isLiked)
-                if(isLiked === true) {
-                    let arr = []
-                    arr.push(elemM)
-                    localStorage.setItem('Movie', JSON.stringify(arr))
-                    console.log('like')
-                }
-            })
         })
     })
-
-
 }
 
 // renderPopularMovies(filmList, arrId);
@@ -124,11 +77,6 @@ popularMovies.addEventListener('click', (e) => {
 
     renderPopularMovies(filmList, arrId);
 })
-
-let getMovie = localStorage.getItem('Movie0')
-    getMovie = JSON.parse(getMovie)
-    console.log(getMovie)
-    
 
 let renderBookmarkMovies = (bookmarkArray) =>{
     bookmarkArray.forEach(movieItem => {
@@ -168,6 +116,9 @@ let renderBookmarkMovies = (bookmarkArray) =>{
 
 bookmarks.addEventListener('click', (e) => {
     listOfMovies.innerHTML = '';
+    let getMovie = localStorage.getItem('Movie')
+    getMovie = JSON.parse(getMovie)
+    // console.log(getMovie)
     
     renderBookmarkMovies(getMovie)
 }) 
