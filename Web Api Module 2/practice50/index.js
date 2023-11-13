@@ -9,15 +9,20 @@ const routes = [
         match: (url) => {
             return url === '/';
         },
-        renderRoute: Popular
+        renderRoute: Popular,
+    },
+    {
+        match: (url) => {
+            return url.includes('/movie/');
+        },
+        renderRoute: Movie,
     },
     {
         match: () => true,
-        renderRoute: notFound
+        renderRoute: notFound,
     }
 ];
-
-Popular();
+// Popular();
 
 class Router {
     constructor(routes) {
