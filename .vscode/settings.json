@@ -1,4 +1,5 @@
 {
     "explorer.compactFolders": false,
-    "liveSassCompile.settings.autoprefix": []
+    "liveSassCompile.settings.autoprefix": [],
+    "liveServer.settings.root": "Web Api Module 2/practice51"
 }
