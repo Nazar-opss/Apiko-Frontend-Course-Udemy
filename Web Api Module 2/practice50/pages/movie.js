@@ -27,11 +27,12 @@ export async function Movie() {
     let renderMovieDetails = (movie_details) => {
         const imagePath = "https://image.tmdb.org/t/p/w300";
         const {poster_path, original_title, vote_average, overview, genres } = movie_details
-        console.log(movie_details.original_title)
+        
         const moviesElement = document.createElement('li');
         moviesElement.classList.add('movie');
-        
-        moviesElement.innerHTML = `<img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4><h3>${vote_average}</h3><h4>${overview}</h4>`;
+
+        const movieGenres = genres.map(genre => genre.name)
+        moviesElement.innerHTML = `<img src="${imagePath + poster_path}" alt="#"/><h3>Title: ${original_title}</h3><h3>Rating: ${vote_average}</h3><h3>Overview: ${overview}</h3><h3>Genres: ${movieGenres}</h3>`;
         listOfMovies.appendChild(moviesElement)
     }
     renderMovieDetails(movie_details)
