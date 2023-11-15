@@ -6,6 +6,7 @@ export async function Search() {
             <div class='navigation'>
                 <img src='../logo.svg' class='logo'/>
                 TheMovieDB PoC
+                <button type="button" class="btn btn-primary mt-1 bookmarks">Bookmarks</button>
             </div>
             <div class="input-group mb-3 w-100">
                 <input type="search" class="searchBar
@@ -63,7 +64,8 @@ export async function Search() {
             const {
                 id,
                 poster_path,
-                original_title
+                original_title,
+                isLiked = false
             } = element
             const moviesElement = document.createElement('li');
             moviesElement.classList.add('movie');

@@ -30,6 +30,7 @@ img {
 }
 .navigation{
     display: flex;
+    align-items:center;
 }
 h4 {
     overflow-wrap: normal;
@@ -41,8 +42,8 @@ h4 {
     position: absolute;
     background-color: #fad2aa;
     padding: 5px 10px;
-    margin-top: 20px;
-    margin-left: 15px;
+    /*margin-top: 20px;
+    margin-left: 15px;*/
     border-radius: 25%
 }
 .hover:hover{
@@ -66,6 +67,11 @@ footer{
     display: flex;
 }
 .filmList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#recommendationsMovie{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

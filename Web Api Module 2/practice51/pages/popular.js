@@ -6,11 +6,12 @@ export async function Popular() {
             <div class='navigation'>
                 <img src='../logo.svg' class='logo'/>
                 TheMovieDB PoC
+                <button type="button" class="btn btn-primary mt-1 bookmarks">Bookmarks</button>
             </div>
             <div class="input-group mb-3 w-100">
                 <input type="search" class="searchBar
-            form-control mt-2" placeholder="search">
-        </div>
+                form-control mt-2" placeholder="search">
+            </div>
         </header>
         <main>
             <div>
@@ -39,19 +40,46 @@ export async function Popular() {
     let renderPopularMovies = (filmList) => {
         filmList.forEach(movieItem => {
             const imagePath = "https://image.tmdb.org/t/p/w300";
-            const { id, poster_path, original_title } = movieItem
+            const { id, poster_path, original_title, isLiked = false } = movieItem
+            const card = document.createElement('div')
+            card.style.flexDirection = 'column'
             const moviesElement = document.createElement('li');
             moviesElement.classList.add('movie');
-            moviesElement.innerHTML = `<img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4>`;
-            moviesElement.dataset.movie_id = id 
-            listOfMovies.appendChild(moviesElement)
+
+            moviesElement.innerHTML = `<div id='movieInfo'>
+            <img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4>
+            </div>
+            `;
+
+            const like = document.createElement('div')
+            like.innerHTML = `<a href="#" class="like-button hover ${id} ${isLiked ? "like-button-active" : ""}">
+            <i class="fa-solid fa-heart ${id} fa-xl"></i>
+            </a>`;
+
+            card.appendChild(like)
+            card.appendChild(moviesElement)
+
+            moviesElement.dataset.movie_id = id;
+
+            listOfMovies.appendChild(card)
         });
-        listOfMovies.addEventListener('click', (e) => {
-            const closestMovie = e.target.closest('li')
-            history.pushState(null,null,`/movie/${closestMovie.dataset.movie_id}`)
-        })
+
     }
     renderPopularMovies(filmList);
+
+    let likeButtons = document.querySelectorAll('a.like-button')
+        likeButtons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                button.classList.toggle('like-button-active')
+                storageSet(e.target.className);
+            })
+        })
+    
+    listOfMovies.addEventListener('click', (e) => {
+        const closestMovie = e.target.closest('li')
+        history.pushState(null,null,`/movie/${closestMovie.dataset.movie_id}`)
+    })
     searchBar.addEventListener('keyup', async (e) =>{
         if(e.key === 'Enter') {
             history.pushState(null,null,`/search?query=${searchBar.value}`)

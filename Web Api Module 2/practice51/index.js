@@ -5,7 +5,7 @@ import { Bookmarks } from "./pages/bookmarks.js"
 import { Search } from "./pages/search.js"
 
 // Popular();
-// add Bookmarks
+// add likes functionality
 const routes = [
     {
         match: (url) => {
@@ -21,7 +21,7 @@ const routes = [
     },
     {
         match: (url) => {
-            return url.includes('/bookmarks/');
+            return url.includes('/bookmarks');
         },
         renderRoute: Bookmarks,
     },
