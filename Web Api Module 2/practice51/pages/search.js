@@ -1,4 +1,8 @@
 import API from "../api.js";
+import { asyncProvider } from "../loading.js";
+import { readLocalStorage } from "./bookmarks.js";
+import { storageSet } from "./bookmarks.js";
+
 const root = document.getElementById('app')
 export async function Search() {
     const layout = `
@@ -32,6 +36,7 @@ export async function Search() {
     let filmList = document.querySelector('.filmList')
     let result = document.querySelector('.results')
     let footer = document.querySelector('footer')
+    let bookmarks = document.querySelector('.bookmarks')
     
 
     // const location = window.location.pathname
@@ -50,7 +55,8 @@ export async function Search() {
     let page = 1
     const loadMore = document.createElement('button')
 
-    const filmArray = await API.fetchMoviesBySearchText(query, page);
+    const filmArray = await asyncProvider(API.fetchMoviesBySearchText.bind(API, query, page))
+    
     console.log(filmArray.total_pages)
     let count = filmArray.total_results;
     if (filmArray.total_results == 0) {
@@ -104,5 +110,8 @@ export async function Search() {
     filmList.addEventListener('click', (e) => {
         const closestMovie = e.target.closest('li')
         history.pushState(null, null, `/movie/${closestMovie.dataset.movie_id}`)
+    })
+    bookmarks.addEventListener('click', (e) => {
+        history.pushState(null,null, `/bookmarks`)
     })
 }

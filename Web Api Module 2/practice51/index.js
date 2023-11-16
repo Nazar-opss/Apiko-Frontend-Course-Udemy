@@ -5,7 +5,7 @@ import { Bookmarks } from "./pages/bookmarks.js"
 import { Search } from "./pages/search.js"
 
 // Popular();
-// add likes functionality
+// need to try to make safeMovie function from this video https://www.youtube.com/watch?v=2hJ1rTANVnk&ab_channel=MelvinAdekanye
 const routes = [
     {
         match: (url) => {

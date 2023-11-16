@@ -1,4 +1,7 @@
 import API from "../api.js";
+import { asyncProvider } from "../loading.js";
+import { readLocalStorage } from "./bookmarks.js";
+import { storageSet } from "./bookmarks.js";
 const root = document.getElementById('app')
 export async function Popular() {
     const layout = `
@@ -28,19 +31,57 @@ export async function Popular() {
 
     loading.remove();
     let searchBar = document.querySelector('.searchBar')
+    let bookmarks = document.querySelector('.bookmarks')
 
-    const filmList = await API.fetchPopularMovies();
+    const filmList = await asyncProvider(API.fetchPopularMovies.bind(API)) 
 
     let home = document.querySelector('.logo')
     home.addEventListener('click', (e) =>{
         history.pushState(null,null,`/`)
     })
 
+    // let storageSet = (id) => {
+    //     id = id.split(" ")[2];
+    //     let activeButton = document.querySelectorAll('.like-button-active')
+    //     if (activeButton) {
+    //         let arr = readLocalStorage()
+    //         console.log(arr)
+    //         const index = arr.indexOf(id)
+    //         console.log(index)
+    //         if (index === -1) {
+    //             arr.push(id)
+    //         } else {
+    //             arr.splice(index, 1)
+    //         }
+    //         console.log(arr)
+    //         return localStorage.setItem('Key', JSON.stringify(arr))
+    //     }
+    // }
+
+    // let readLocalStorage = () => {
+    //     let arr = localStorage.getItem('Key')
+    //     arr = JSON.parse(arr)
+
+    //     if (arr === null) {
+    //         arr = [];
+    //     }
+    //     // console.log(typeof(arr))
+    //     return arr;
+    // }
+    let arrId = readLocalStorage()
+
     // console.log(filmList)
     let renderPopularMovies = (filmList) => {
         filmList.forEach(movieItem => {
             const imagePath = "https://image.tmdb.org/t/p/w300";
-            const { id, poster_path, original_title, isLiked = false } = movieItem
+            let { id, poster_path, original_title, isLiked = false } = movieItem
+
+             arrId.forEach(elem => {
+                if (elem.includes(movieItem.id)) {
+                    isLiked = true;
+                }
+            })
+
             const card = document.createElement('div')
             card.style.flexDirection = 'column'
             const moviesElement = document.createElement('li');
@@ -84,5 +125,8 @@ export async function Popular() {
         if(e.key === 'Enter') {
             history.pushState(null,null,`/search?query=${searchBar.value}`)
         }
+    })
+    bookmarks.addEventListener('click', (e) => {
+        history.pushState(null,null, `/bookmarks`)
     })
 }
