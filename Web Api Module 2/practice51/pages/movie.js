@@ -110,6 +110,15 @@ export async function Movie() {
             card.appendChild(like)
             card.appendChild(moviesElement)
 
+            // if(isLiked == true){
+            //     if (localStorage.getItem('Movie3') == null){
+            //         localStorage.setItem('Movie3','[]')
+            //     }
+            //     let old_data = JSON.parse(localStorage.getItem('Movie3'));
+            //     old_data.push(movieItem)
+            //     localStorage.setItem('Movie3', JSON.stringify(old_data))
+            // }
+
             moviesElement.dataset.movie_id = id
 
             recommendationsMovie.appendChild(card)
@@ -121,10 +130,40 @@ export async function Movie() {
         likeButtons.forEach((button) => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
-                // movie_recommendations.forEach(movieItem =>{
-
-                // })
-
+                movie_recommendations.forEach(movieItem =>{
+                    let {id, poster_path, original_title, isLiked = false} = movieItem
+                    console.log(movieItem)
+                    const closestMovie = e.target.closest(':not(div)')
+                    console.log(closestMovie.classList[2])
+                    
+                    if(id == closestMovie.classList[2]){
+                        console.log('Added to' )
+                        if (localStorage.getItem('Movie3') == null){
+                            localStorage.setItem('Movie3','[]')
+                        }
+                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+                        // знайти як видялати item, по натиску на кнопку,
+                        if (old_data.includes(movieItem)){
+                            console.log('Includes')
+                            let index = old_data.indexOf(movieItem)
+                            console.log(index)
+                            if (index > -1) { // only splice array when item is found
+                                old_data.splice(index, 1); // 2nd parameter means remove one item only
+                            }
+                            console.log(old_data)
+                        } else {
+                            old_data.push(movieItem)
+                        }
+                        localStorage.setItem('Movie3', JSON.stringify(old_data))
+                        // localStorage.setItem('movie4', JSON.stringify(movieItem));
+                    } 
+                    
+                    let old_data = localStorage.getItem('Movie3')
+                    old_data = JSON.parse(old_data);
+                    console.log(old_data)
+                    
+                })
+                
                 button.classList.toggle('like-button-active')
                 storageSet(e.target.className);
             })

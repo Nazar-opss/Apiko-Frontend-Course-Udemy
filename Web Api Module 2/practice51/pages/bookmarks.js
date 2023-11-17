@@ -124,8 +124,11 @@ export async function Bookmarks() {
             })
         })
     }
+    
+    let getMovie = localStorage.getItem('Movie3')
+        getMovie = JSON.parse(getMovie)
 
-    renderPopularMovies(filmList, arrId);
+    renderPopularMovies(getMovie, arrId);
 
     // popularMovies.addEventListener('click', (e) => {
     //     listOfMovies.innerHTML = '';
@@ -176,11 +179,11 @@ export async function Bookmarks() {
 
     bookmarks.addEventListener('click', (e) => {
         listOfMovies.innerHTML = '';
-        let getMovie = localStorage.getItem('Movie')
-        getMovie = JSON.parse(getMovie)
+        // let getMovie = localStorage.getItem('Movie3')
+        // getMovie = JSON.parse(getMovie)
         // console.log(getMovie)
 
-        renderBookmarkMovies(getMovie)
+        renderBookmarkMovies(bookmarkArray)
     })
 
     listOfMovies.addEventListener('click', (e) => {
