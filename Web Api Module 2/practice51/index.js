@@ -5,7 +5,7 @@ import { Bookmarks } from "./pages/bookmarks.js"
 import { Search } from "./pages/search.js"
 
 // Popular();
-// need to try to make safeMovie function from this video https://www.youtube.com/watch?v=2hJ1rTANVnk&ab_channel=MelvinAdekanye
+// make likes for all pages and try to fix reload on pages
 const routes = [
     {
         match: (url) => {

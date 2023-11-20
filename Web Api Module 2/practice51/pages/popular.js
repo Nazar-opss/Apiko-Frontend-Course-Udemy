@@ -76,7 +76,7 @@ export async function Popular() {
             const imagePath = "https://image.tmdb.org/t/p/w300";
             let { id, poster_path, original_title, isLiked = false } = movieItem
 
-             arrId.forEach(elem => {
+            arrId.forEach(elem => {
                 if (elem.includes(movieItem.id)) {
                     isLiked = true;
                 }

@@ -132,38 +132,31 @@ export async function Movie() {
                 e.preventDefault();
                 movie_recommendations.forEach(movieItem =>{
                     let {id, poster_path, original_title, isLiked = false} = movieItem
-                    console.log(movieItem)
+                    
                     const closestMovie = e.target.closest(':not(div)')
-                    console.log(closestMovie.classList[2])
                     
                     if(id == closestMovie.classList[2]){
                         console.log('Added to' )
                         if (localStorage.getItem('Movie3') == null){
                             localStorage.setItem('Movie3','[]')
                         }
+
                         let old_data = JSON.parse(localStorage.getItem('Movie3'));
-                        // знайти як видялати item, по натиску на кнопку,
-                        if (old_data.includes(movieItem)){
-                            console.log('Includes')
-                            let index = old_data.indexOf(movieItem)
-                            console.log(index)
-                            if (index > -1) { // only splice array when item is found
-                                old_data.splice(index, 1); // 2nd parameter means remove one item only
-                            }
-                            console.log(old_data)
+
+                        const index = old_data.findIndex(item => item.id === movieItem.id);
+                        // Перевіряємо, чи об'єкт вже є в масиві
+                        if (index === -1) {
+                            // Якщо об'єкта немає в масиві, додаємо його
+                            old_data.push(movieItem);
                         } else {
-                            old_data.push(movieItem)
+                            // Якщо об'єкт вже є в масиві, видаляємо його
+                            old_data.splice(index, 1);
                         }
-                        localStorage.setItem('Movie3', JSON.stringify(old_data))
-                        // localStorage.setItem('movie4', JSON.stringify(movieItem));
-                    } 
-                    
-                    let old_data = localStorage.getItem('Movie3')
-                    old_data = JSON.parse(old_data);
-                    console.log(old_data)
-                    
+
+                        // Зберігаємо оновлений масив в local storage
+                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                    }
                 })
-                
                 button.classList.toggle('like-button-active')
                 storageSet(e.target.className);
             })
