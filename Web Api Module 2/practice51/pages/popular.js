@@ -8,7 +8,7 @@ export async function Popular() {
         <header>
             <div class='navigation'>
                 <img src='../logo.svg' class='logo'/>
-                TheMovieDB PoC
+                <h2>Popular</h2>
                 <button type="button" class="btn btn-primary mt-1 bookmarks">Bookmarks</button>
             </div>
             <div class="input-group mb-3 w-100">
@@ -83,7 +83,8 @@ export async function Popular() {
             })
 
             const card = document.createElement('div')
-            card.style.flexDirection = 'column'
+            card.classList.add('movieCard')
+
             const moviesElement = document.createElement('li');
             moviesElement.classList.add('movie');
 
@@ -112,6 +113,33 @@ export async function Popular() {
         likeButtons.forEach((button) => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
+                filmList.forEach(movieItem =>{
+                    let {id} = movieItem
+                    
+                    const closestMovie = e.target.closest(':not(div)')
+                    
+                    if(id == closestMovie.classList[2]){
+                        console.log('Added to' )
+                        if (localStorage.getItem('Movie3') == null){
+                            localStorage.setItem('Movie3','[]')
+                        }
+
+                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+
+                        const index = old_data.findIndex(item => item.id === movieItem.id);
+                        // Перевіряємо, чи об'єкт вже є в масиві
+                        if (index === -1) {
+                            // Якщо об'єкта немає в масиві, додаємо його
+                            old_data.push(movieItem);
+                        } else {
+                            // Якщо об'єкт вже є в масиві, видаляємо його
+                            old_data.splice(index, 1);
+                        }
+
+                        // Зберігаємо оновлений масив в local storage
+                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                    }
+                })
                 button.classList.toggle('like-button-active')
                 storageSet(e.target.className);
             })

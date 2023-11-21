@@ -6,7 +6,7 @@ export async function Bookmarks() {
         <header>
             <div class='navigation'>
                 <img src='../logo.svg' class='logo'/>
-                TheMovieDB PoC
+                <h2>Bookmarks</h2>
                 <button type="button" class="btn btn-primary mt-1 bookmarks">Bookmarks</button>
             </div>
             <div class="input-group mb-3 w-100">
@@ -70,6 +70,9 @@ export async function Bookmarks() {
     }
     let arrId = readLocalStorage();
 
+    let getMovie = localStorage.getItem('Movie3')
+        getMovie = JSON.parse(getMovie)
+
     let renderPopularMovies = (filmList, arrId) => {
         filmList.forEach(movieItem => {
             const imagePath = "https://image.tmdb.org/t/p/w300";
@@ -85,8 +88,10 @@ export async function Bookmarks() {
                     isLiked = true;
                 }
             })
+
             const card = document.createElement('div')
-            card.style.flexDirection = 'column'
+            card.classList.add('movieCard')
+
             const moviesElement = document.createElement('li');
             moviesElement.classList.add('movie');
 
@@ -112,79 +117,47 @@ export async function Bookmarks() {
             moviesElement.dataset.movie_id = id;
 
             listOfMovies.appendChild(card)
-            localStorage.setItem('Movie', JSON.stringify(filmList))
+            // localStorage.setItem('Movie', JSON.stringify(filmList))
         });
 
         let likeButtons = document.querySelectorAll('a.like-button')
         likeButtons.forEach((button) => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
+                getMovie.forEach(movieItem =>{
+                    let {id} = movieItem
+                    
+                    const closestMovie = e.target.closest(':not(div)')
+                    
+                    if(id == closestMovie.classList[2]){
+                        console.log('Added to' )
+                        if (localStorage.getItem('Movie3') == null){
+                            localStorage.setItem('Movie3','[]')
+                        }
+
+                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+
+                        const index = old_data.findIndex(item => item.id === movieItem.id);
+                        // Перевіряємо, чи об'єкт вже є в масиві
+                        if (index === -1) {
+                            // Якщо об'єкта немає в масиві, додаємо його
+                            old_data.push(movieItem);
+                        } else {
+                            // Якщо об'єкт вже є в масиві, видаляємо його
+                            old_data.splice(index, 1);
+                        }
+
+                        // Зберігаємо оновлений масив в local storage
+                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                    }
+                })
                 button.classList.toggle('like-button-active')
                 storageSet(e.target.className);
             })
         })
     }
     
-    let getMovie = localStorage.getItem('Movie3')
-        getMovie = JSON.parse(getMovie)
-
     renderPopularMovies(getMovie, arrId);
-
-    // popularMovies.addEventListener('click', (e) => {
-    //     listOfMovies.innerHTML = '';
-
-    //     renderPopularMovies(filmList, arrId);
-    // })
-
-    let renderBookmarkMovies = (bookmarkArray) => {
-        bookmarkArray.forEach(movieItem => {
-            const imagePath = "https://image.tmdb.org/t/p/w300";
-            let {
-                id,
-                poster_path,
-                original_title,
-                isLiked = false
-            } = movieItem
-
-            arrId.forEach(elem => {
-                if (elem.includes(movieItem.id)) {
-                    isLiked = true;
-                }
-            })
-
-            const moviesElement = document.createElement('li');
-            moviesElement.classList.add('movie');
-            moviesElement.innerHTML = `<img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4>
-            <a href="#" class="like-button hover ${id} ${isLiked ? "like-button-active" : ""}">
-                <i class="fa-solid fa-heart ${id} fa-xl"></i>
-            </a>`;
-
-            if (isLiked == false) {
-                moviesElement.innerHTML = '';
-                moviesElement.style.padding = '0px'
-            }
-
-            listOfMovies.appendChild(moviesElement)
-        })
-        let likeButtons = document.querySelectorAll('a.like-button')
-        likeButtons.forEach((button) => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                button.classList.toggle('like-button-active')
-                storageSet(e.target.className);
-            })
-        })
-    }
-    // renderBookmarkMovies(bookmarkArray)
-
-    bookmarks.addEventListener('click', (e) => {
-        listOfMovies.innerHTML = '';
-        // let getMovie = localStorage.getItem('Movie3')
-        // getMovie = JSON.parse(getMovie)
-        // console.log(getMovie)
-
-        renderBookmarkMovies(bookmarkArray)
-    })
 
     listOfMovies.addEventListener('click', (e) => {
         const closestMovie = e.target.closest('li')
@@ -194,6 +167,9 @@ export async function Bookmarks() {
         if(e.key === 'Enter') {
             history.pushState(null,null,`/search?query=${searchBar.value}`)
         }
+    })
+    bookmarks.addEventListener('click', (e) => {
+        history.pushState(null,null, `/bookmarks`)
     })
 }
 

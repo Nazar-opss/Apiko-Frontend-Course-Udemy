@@ -31,6 +31,8 @@ img {
 .navigation{
     display: flex;
     align-items:center;
+    justify-content: space-evenly;
+    width: 100%;
 }
 h4 {
     overflow-wrap: normal;
@@ -108,4 +110,11 @@ footer{
     100% {
         transform: rotate(1800deg);
     }
+}
+.movieCard{
+    flex-direction: column;
+}
+h2{
+    text-align: center;
+    margin-bottom: 0px !important;
 }

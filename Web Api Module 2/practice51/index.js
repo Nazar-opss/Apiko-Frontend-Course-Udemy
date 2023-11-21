@@ -5,7 +5,7 @@ import { Bookmarks } from "./pages/bookmarks.js"
 import { Search } from "./pages/search.js"
 
 // Popular();
-// make likes for all pages and try to fix reload on pages
+// fix reload on movie.js
 const routes = [
     {
         match: (url) => {
