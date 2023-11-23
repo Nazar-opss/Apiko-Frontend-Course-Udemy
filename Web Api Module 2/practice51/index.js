@@ -1,8 +1,8 @@
 import { Popular } from "./pages/popular.js"
-import { notFound } from "./pages/notFound.js"
 import { Movie } from "./pages/movie.js"
 import { Bookmarks } from "./pages/bookmarks.js"
 import { Search } from "./pages/search.js"
+import { notFound } from "./pages/notFound.js"
 
 // Popular();
 // fix reload on movie.js
@@ -27,7 +27,7 @@ const routes = [
     },
     {
         match: (url) => {
-            return url.includes('/movie/');
+            return url.includes('/movie');
         },
         renderRoute: Movie,
     },
@@ -42,8 +42,8 @@ class Router {
     constructor(routes) {
         this._routes = routes;
 
-        window.history.pushState = (data, title, ulr) => {
-            History.prototype.pushState.apply(window.history, [data, title, ulr]);
+        window.history.pushState = (data, title, url) => {
+            History.prototype.pushState.apply(window.history, [data, title, url]);
             this.reroute();
         }
 

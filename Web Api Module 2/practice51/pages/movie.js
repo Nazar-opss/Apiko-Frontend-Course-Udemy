@@ -35,14 +35,8 @@ export async function Movie() {
     let searchBar = document.querySelector('.searchBar')
     let movieHeader = document.querySelector('.movieHeader')
 
-    home.addEventListener('click', (e) =>{
-        history.pushState(null,null,`/`)
-    })
-
     const { pathname } = window.location;
-    // console.log(pathname)
     const [, movie_id] = pathname.split('movie/')
-    console.log(movie_id)
 
     const movie_details = await asyncProvider(API.fetchMovieDetails.bind(API, movie_id))
     const movie_recommendations = await asyncProvider(API.fetchMoviesRecommendations.bind(API, movie_id))
@@ -114,15 +108,6 @@ export async function Movie() {
             card.appendChild(like)
             card.appendChild(moviesElement)
 
-            // if(isLiked == true){
-            //     if (localStorage.getItem('Movie3') == null){
-            //         localStorage.setItem('Movie3','[]')
-            //     }
-            //     let old_data = JSON.parse(localStorage.getItem('Movie3'));
-            //     old_data.push(movieItem)
-            //     localStorage.setItem('Movie3', JSON.stringify(old_data))
-            // }
-
             moviesElement.dataset.movie_id = id
 
             recommendationsMovie.appendChild(card)
@@ -139,25 +124,20 @@ export async function Movie() {
                     const closestMovie = e.target.closest(':not(div)')
                     
                     if(id == closestMovie.classList[2]){
-                        console.log('Added to' )
-                        if (localStorage.getItem('Movie3') == null){
-                            localStorage.setItem('Movie3','[]')
+                        if (localStorage.getItem('Movie') == null){
+                            localStorage.setItem('Movie','[]')
                         }
 
-                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+                        let old_data = JSON.parse(localStorage.getItem('Movie'));
 
                         const index = old_data.findIndex(item => item.id === movie_details.id);
-                        // Перевіряємо, чи об'єкт вже є в масиві
                         if (index === -1) {
-                            // Якщо об'єкта немає в масиві, додаємо його
                             old_data.push(movie_details);
                         } else {
-                            // Якщо об'єкт вже є в масиві, видаляємо його
                             old_data.splice(index, 1);
                         }
 
-                        // Зберігаємо оновлений масив в local storage
-                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                        localStorage.setItem('Movie', JSON.stringify(old_data));
                     }
                 movie_recommendations.forEach(movieItem =>{
                     let {id} = movieItem
@@ -166,31 +146,26 @@ export async function Movie() {
                     
                     if(id == closestMovie.classList[2]){
                         console.log('Added to' )
-                        if (localStorage.getItem('Movie3') == null){
-                            localStorage.setItem('Movie3','[]')
+                        if (localStorage.getItem('Movie') == null){
+                            localStorage.setItem('Movie','[]')
                         }
 
-                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+                        let old_data = JSON.parse(localStorage.getItem('Movie'));
 
                         const index = old_data.findIndex(item => item.id === movieItem.id);
-                        // Перевіряємо, чи об'єкт вже є в масиві
                         if (index === -1) {
-                            // Якщо об'єкта немає в масиві, додаємо його
                             old_data.push(movieItem);
                         } else {
-                            // Якщо об'єкт вже є в масиві, видаляємо його
                             old_data.splice(index, 1);
                         }
 
-                        // Зберігаємо оновлений масив в local storage
-                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                        localStorage.setItem('Movie', JSON.stringify(old_data));
                     }
                 })
                 button.classList.toggle('like-button-active')
                 storageSet(e.target.className);
             })
         })
-
 
     recommendationsMovie.addEventListener('click', (e) => {
         const closestMovie = e.target.closest('li')
@@ -203,6 +178,9 @@ export async function Movie() {
     })
     bookmarks.addEventListener('click', (e) => {
         history.pushState(null,null, `/bookmarks`)
+    })
+    home.addEventListener('click', (e) =>{
+        history.pushState(null,null,`/`)
     })
 }
 

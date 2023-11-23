@@ -37,20 +37,16 @@ export async function Search() {
     let result = document.querySelector('.results')
     let footer = document.querySelector('footer')
     let bookmarks = document.querySelector('.bookmarks')
+    let home = document.querySelector('.logo')
     
 
-    // const location = window.location.pathname
-    // console.log(location)
     const search = window.location.search
     console.log(search)
 
     const [, query] = search.split('?query=')
     console.log(query)
     
-    let home = document.querySelector('.logo')
-    home.addEventListener('click', (e) =>{
-        history.pushState(null,null,`/`)
-    })
+   
 
     let page = 1
     const loadMore = document.createElement('button')
@@ -120,24 +116,20 @@ export async function Search() {
                     
                     if(id == closestMovie.classList[2]){
                         console.log('Added to' )
-                        if (localStorage.getItem('Movie3') == null){
-                            localStorage.setItem('Movie3','[]')
+                        if (localStorage.getItem('Movie') == null){
+                            localStorage.setItem('Movie','[]')
                         }
 
-                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+                        let old_data = JSON.parse(localStorage.getItem('Movie'));
 
                         const index = old_data.findIndex(item => item.id === movieItem.id);
-                        // Перевіряємо, чи об'єкт вже є в масиві
                         if (index === -1) {
-                            // Якщо об'єкта немає в масиві, додаємо його
                             old_data.push(movieItem);
                         } else {
-                            // Якщо об'єкт вже є в масиві, видаляємо його
                             old_data.splice(index, 1);
                         }
 
-                        // Зберігаємо оновлений масив в local storage
-                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                        localStorage.setItem('Movie', JSON.stringify(old_data));
                     }
                 })
                 button.classList.toggle('like-button-active')
@@ -171,5 +163,8 @@ export async function Search() {
     })
     bookmarks.addEventListener('click', (e) => {
         history.pushState(null,null, `/bookmarks`)
+    })
+    home.addEventListener('click', (e) =>{
+        history.pushState(null,null,`/`)
     })
 }

@@ -15,65 +15,25 @@ export async function Bookmarks() {
             </div>
         </header>
         <main>
-            <div>
-                <div class="loading">Loading popular movies...</div>
-                <div id="listOfMovies"></div>
-            </div>
+            <div id="listOfMovies"></div>
         </main>
     `
 
     root.innerHTML = layout;
 
     let listOfMovies = document.getElementById('listOfMovies')
-    let loading = document.querySelector('.loading')
-    // let popularMovies = document.querySelector('.popularMovies')
     let bookmarks = document.querySelector('.bookmarks')
     let searchBar = document.querySelector('.searchBar')
     let home = document.querySelector('.logo')
 
-    home.addEventListener('click', (e) =>{
-        history.pushState(null,null,`/`)
-    })
-
-
-    loading.remove();
-
     const filmList = await asyncProvider(API.fetchPopularMovies.bind(API)) 
 
-    let storageSet = (id) => {
-        id = id.split(" ")[2];
-        let activeButton = document.querySelectorAll('.like-button-active')
-        if (activeButton) {
-            let arr = readLocalStorage()
-            console.log(arr)
-            const index = arr.indexOf(id)
-            console.log(index)
-            if (index === -1) {
-                arr.push(id)
-            } else {
-                arr.splice(index, 1)
-            }
-            console.log(arr)
-            return localStorage.setItem('Key', JSON.stringify(arr))
-        }
-    }
-
-    let readLocalStorage = () => {
-        let arr = localStorage.getItem('Key')
-        arr = JSON.parse(arr)
-
-        if (arr === null) {
-            arr = [];
-        }
-        // console.log(typeof(arr))
-        return arr;
-    }
     let arrId = readLocalStorage();
 
-    let getMovie = localStorage.getItem('Movie3')
+    let getMovie = localStorage.getItem('Movie')
         getMovie = JSON.parse(getMovie)
 
-    let renderPopularMovies = (filmList, arrId) => {
+    let renderBookmarkMovies = (filmList, arrId) => {
         filmList.forEach(movieItem => {
             const imagePath = "https://image.tmdb.org/t/p/w300";
             let {
@@ -107,17 +67,10 @@ export async function Bookmarks() {
 
             card.appendChild(like)
             card.appendChild(moviesElement)
-            
-            if (isLiked == false) {
-                moviesElement.innerHTML = ''
-                moviesElement.style.padding = '0px'
-                like.innerHTML = ''
-            }
 
             moviesElement.dataset.movie_id = id;
 
             listOfMovies.appendChild(card)
-            // localStorage.setItem('Movie', JSON.stringify(filmList))
         });
 
         let likeButtons = document.querySelectorAll('a.like-button')
@@ -131,24 +84,21 @@ export async function Bookmarks() {
                     
                     if(id == closestMovie.classList[2]){
                         console.log('Added to' )
-                        if (localStorage.getItem('Movie3') == null){
-                            localStorage.setItem('Movie3','[]')
+                        if (localStorage.getItem('Movie') == null){
+                            localStorage.setItem('Movie','[]')
                         }
 
-                        let old_data = JSON.parse(localStorage.getItem('Movie3'));
+                        let old_data = JSON.parse(localStorage.getItem('Movie'));
 
                         const index = old_data.findIndex(item => item.id === movieItem.id);
-                        // Перевіряємо, чи об'єкт вже є в масиві
+                        
                         if (index === -1) {
-                            // Якщо об'єкта немає в масиві, додаємо його
                             old_data.push(movieItem);
                         } else {
-                            // Якщо об'єкт вже є в масиві, видаляємо його
                             old_data.splice(index, 1);
                         }
 
-                        // Зберігаємо оновлений масив в local storage
-                        localStorage.setItem('Movie3', JSON.stringify(old_data));
+                        localStorage.setItem('Movie', JSON.stringify(old_data));
                     }
                 })
                 button.classList.toggle('like-button-active')
@@ -156,8 +106,7 @@ export async function Bookmarks() {
             })
         })
     }
-    
-    renderPopularMovies(getMovie, arrId);
+    renderBookmarkMovies(getMovie, arrId);
 
     listOfMovies.addEventListener('click', (e) => {
         const closestMovie = e.target.closest('li')
@@ -170,6 +119,9 @@ export async function Bookmarks() {
     })
     bookmarks.addEventListener('click', (e) => {
         history.pushState(null,null, `/bookmarks`)
+    })
+    home.addEventListener('click', (e) =>{
+        history.pushState(null,null,`/`)
     })
 }
 
