@@ -30,8 +30,6 @@ export async function Popular() {
 
     const filmList = await asyncProvider(API.fetchPopularMovies.bind(API)) 
 
-    
-
     let arrId = readLocalStorage()
 
     // console.log(filmList)
@@ -69,7 +67,6 @@ export async function Popular() {
 
             listOfMovies.appendChild(card)
         });
-
     }
     renderPopularMovies(filmList);
 
@@ -107,6 +104,7 @@ export async function Popular() {
     
     listOfMovies.addEventListener('click', (e) => {
         const closestMovie = e.target.closest('li')
+
         history.pushState(null,null,`/movie/${closestMovie.dataset.movie_id}`)
     })
     searchBar.addEventListener('keyup', async (e) =>{

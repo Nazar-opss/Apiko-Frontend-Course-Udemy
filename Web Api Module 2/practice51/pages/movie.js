@@ -109,7 +109,6 @@ export async function Movie() {
             card.appendChild(moviesElement)
 
             moviesElement.dataset.movie_id = id
-
             recommendationsMovie.appendChild(card)
         })
     }

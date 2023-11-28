@@ -1,6 +1,9 @@
 import API from "../api.js";
+
 import { asyncProvider } from "../loading.js";
+
 const root = document.getElementById('app')
+
 export async function Bookmarks() {
     const layout = `
         <header>
@@ -35,7 +38,7 @@ export async function Bookmarks() {
 
     let renderBookmarkMovies = (filmList, arrId) => {
         filmList.forEach(movieItem => {
-            const imagePath = "https://image.tmdb.org/t/p/w300";
+            let imagePath = "https://image.tmdb.org/t/p/w300";
             let {
                 id,
                 poster_path,
@@ -55,10 +58,19 @@ export async function Bookmarks() {
             const moviesElement = document.createElement('li');
             moviesElement.classList.add('movie');
 
-            moviesElement.innerHTML = `<div id='movieInfo'>
-            <img src="${imagePath + poster_path}" alt="#"/><h4>${original_title}</h4>
-            </div>
-            `;
+            if (poster_path === null) {
+                imagePath = "missing-image.png";
+                moviesElement.innerHTML = 
+                    `<div id='movieInfo'>
+                        <img src="${imagePath}" alt="#"/><h4>${original_title}</h4>
+                    </div>`;
+            } else {
+                moviesElement.innerHTML = 
+                    `<div id='movieInfo'>
+                        <img src="${imagePath + poster_path}" alt="#"/>
+                        <h4>${original_title}</h4>
+                    </div>`;
+            }
 
             const like = document.createElement('div')
             like.innerHTML = `<a href="#" class="like-button hover ${id} ${isLiked ? "like-button-active" : ""}">
@@ -69,7 +81,6 @@ export async function Bookmarks() {
             card.appendChild(moviesElement)
 
             moviesElement.dataset.movie_id = id;
-
             listOfMovies.appendChild(card)
         });
 
